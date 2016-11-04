@@ -10,9 +10,9 @@
 </head>
 <body>
 <div id="gameBoard">
-    <div id="centerBMO">
+    <div id="clickBMO">
         <h1 id="title">BMO Says</h1>
-        <p>Click to Start New Game</p>
+        <p>Start New Game</p>
         <h2 id="level">Level : 0</h2>
     </div>
 
@@ -134,7 +134,7 @@
     }
 
 
-    $('#centerBMO').click(function () {
+    $('#clickBMO').click(function () {
         if (sequenceCheck === false) {
             startGame();
             startSound();
