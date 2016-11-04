@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Simon</title>
+    <link rel="stylesheet" href="simple_simon_css.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+<div id="gameBoard">
+    <div id="centerBMO">
+        <h1 id="title">BMO Says</h1>
+        <p>Click to Start New Game</p>
+        <h2 id="level">Level : 0</h2>
+    </div>
+
+    <div id="1" class="princess bubblegum"></div>
+    <div id="2" class="princess flame"></div>
+    <div id="3" class="princess lumpyspace"></div>
+    <div id="4" class="princess marceline"></div>
+
+
+</div>
+<script src="jquery.js"></script>
+<script>
+    var pattern = [];
+    var level = 0;
+    var lastSequence = [];
+    var sequenceCheck = false;
+
+    function randomNum(min, max) {
+        return Math.round(Math.random() * (max - min)) + min;
+    }
+
+
+    function addToPattern() {
+        var value = randomNum(1, 4);
+
+        pattern.push(value);
+    }
+
+    function animateSquare() {
+
+        var tile = pattern.pop();
+        sequenceCheck = true;
+
+        $('#' + tile).animate({
+            opacity: 0.2
+        }, 200).animate({
+            opacity: 1
+        }, 100);
+
+        lastSequence.push(tile);
+
+
+
+    }
+
+    function playPattern() {
+
+        for (var i = 0; i < pattern.length; i++) {
+            var delayTime = i * 600;
+
+            setTimeout(animateSquare, delayTime);
+
+
+        }
+
+    }
+
+
+    createClickEvent();
+    function createClickEvent() {
+        console.log($('.princess'));
+        $('.princess').click(function () {
+            console.log(lastSequence);
+            var tile = lastSequence.shift();
+
+            var tileId = $(this).attr('id');
+
+            $(this).animate({opacity: .2}, 200).animate({opacity: 1}, 100)
+
+            if (tile == tileId) {
+                pattern.push(tile);
+
+                if (lastSequence.length <= 0) {
+                    level++;
+                    $('#level').html('Level: ' + level);
+
+
+                    addToPattern();
+
+                    setTimeout(playPattern, 800);
+                }
+
+            } else {
+                sequenceCheck = false;
+                failSound();
+                $('h1').html('Game Over').css({
+                    fontSize: 20,
+                    marginBottom: 15,
+                    paddingTop: 0
+                });
+                $('p').html('Click to Restart');
+                pattern = [];
+                lastSequence = [];
+            }
+
+            if (level % 5 == 0) {
+                rewardSound();
+            }
+
+
+
+        });
+    }
+
+
+
+    function startGame() {
+        resetGame();
+        addToPattern();
+        playPattern();
+    }
+
+    function resetGame() {
+        level = 0;
+
+        $('#level').html('Level: ' + level);
+        $('h1').html('BMO Says').css({
+            fontSize: 25,
+            marginBottom: 0,
+            paddingTop: 0
+        });
+        $('p').html('Click to Start Game');
+    }
+
+
+    $('#centerBMO').click(function () {
+        if (sequenceCheck === false) {
+            startGame();
+        }
+
+
+    });
+
+    function failSound() {
+        var audio = new Audio('images/unacceptable.mp3');
+        audio.play();
+    }
+
+    function rewardSound() {
+        var audio = new Audio('images/oh_my_glob.mp3');
+        audio.play();
+    }
+
+
+
+
+
+
+</script>
+</body>
+</html>
