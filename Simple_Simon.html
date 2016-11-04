@@ -55,7 +55,6 @@
         lastSequence.push(tile);
 
 
-
     }
 
     function playPattern() {
@@ -107,16 +106,13 @@
                 pattern = [];
                 lastSequence = [];
             }
-
             if (level % 5 == 0) {
                 rewardSound();
             }
 
 
-
         });
     }
-
 
 
     function startGame() {
@@ -141,6 +137,7 @@
     $('#centerBMO').click(function () {
         if (sequenceCheck === false) {
             startGame();
+            startSound();
         }
 
 
@@ -156,9 +153,10 @@
         audio.play();
     }
 
-
-
-
+    function startSound() {
+        var audio = new Audio('images/BMO_jam.mp3');
+        audio.play();
+    }
 
 
 </script>
