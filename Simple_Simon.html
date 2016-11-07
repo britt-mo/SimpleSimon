@@ -9,7 +9,7 @@
 
 </head>
 <body>
-<div id="gameBoard">
+<div id="simonGame">
     <div id="clickBMO">
         <h1 id="title">BMO Says</h1>
         <p>Start New Game</p>
@@ -60,7 +60,7 @@
     function playPattern() {
 
         for (var i = 0; i < pattern.length; i++) {
-            var delayTime = i * 600;
+            var delayTime = i * 500;
 
             setTimeout(animateSquare, delayTime);
 
@@ -91,17 +91,13 @@
 
                     addToPattern();
 
-                    setTimeout(playPattern, 800);
+                    setTimeout(playPattern, 600);
                 }
 
             } else {
                 sequenceCheck = false;
                 failSound();
-                $('h1').html('Game Over').css({
-                    fontSize: 20,
-                    marginBottom: 15,
-                    paddingTop: 0
-                });
+                $('h1').html('Game Over').css({});
                 $('p').html('Click to Restart');
                 pattern = [];
                 lastSequence = [];
@@ -125,11 +121,7 @@
         level = 0;
 
         $('#level').html('Level: ' + level);
-        $('h1').html('BMO Says').css({
-            fontSize: 25,
-            marginBottom: 0,
-            paddingTop: 0
-        });
+        $('h1').html('BMO Says').css({});
         $('p').html('Click to Start Game');
     }
 
